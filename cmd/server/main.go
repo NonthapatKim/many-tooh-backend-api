@@ -8,8 +8,10 @@ import (
 )
 
 func main() {
+
 	if err := server.RunServer(); err != nil {
 		fmt.Println("Run server failed!", err)
 		os.Exit(1)
 	}
+
 }
