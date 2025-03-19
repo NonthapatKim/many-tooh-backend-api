@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/NonthapatKim/many_tooth_backend_api/internal/adapter/handler"
-	"github.com/NonthapatKim/many_tooth_backend_api/internal/adapter/handler/middleware"
+	"github.com/NonthapatKim/many_tooh_backend_api/internal/adapter/handler"
+	"github.com/NonthapatKim/many_tooh_backend_api/internal/adapter/handler/middleware"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
@@ -31,6 +31,11 @@ func NewRouter(h handler.Handler) (*Router, error) {
 	basePathV1.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("สวัสดี !")
 	})
+
+	user := basePathV1.Group("/users")
+	{
+		user.Post("/create", h.CreateStaffUser)
+	}
 
 	return &Router{app: app}, nil
 }

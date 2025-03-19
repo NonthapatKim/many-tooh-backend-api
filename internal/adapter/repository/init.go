@@ -3,7 +3,7 @@ package repository
 import (
 	"database/sql"
 
-	"github.com/NonthapatKim/many_tooth_backend_api/internal/core/port"
+	"github.com/NonthapatKim/many_tooh_backend_api/internal/core/port"
 )
 
 type repository struct {

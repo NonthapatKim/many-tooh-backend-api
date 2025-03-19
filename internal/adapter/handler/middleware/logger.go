@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"github.com/NonthapatKim/many_tooth_backend_api/infrastructure/logs"
+	"github.com/NonthapatKim/many_tooh_backend_api/infrastructure/logs"
 	"github.com/gofiber/fiber/v2"
 )
 

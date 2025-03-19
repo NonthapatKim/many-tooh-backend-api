@@ -1,7 +1,7 @@
 services:
- many-tooth:
-    container_name: many-tooth-backend-api
-    image: many-tooth-backend-api
+ many-tooh:
+    container_name: many-tooh-backend-api
+    image: many-tooh-backend-api
     platform: linux/amd64
     build:
       context: .
