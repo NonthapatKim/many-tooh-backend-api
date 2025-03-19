@@ -1,12 +1,18 @@
-FROM golang:1.20-buster
+FROM golang:1.23-alpine
 
-WORKDIR /app/cmd/server
+RUN apk add --no-cache git tzdata
 
-RUN go install github.com/cosmtrek/air@latest
+ENV TZ=Asia/Bangkok
+
+WORKDIR /app
+
+RUN go install github.com/air-verse/air@latest
 
 COPY go.mod go.sum ./
-RUN go mod tidy
+RUN go mod download
 
-EXPOSE 8080
-CMD ["air", "-c", "../../.air.toml"]
+COPY . .
 
+ENV AIR_CONF=.air.toml
+
+CMD ["air", "-c", ".air.toml"]

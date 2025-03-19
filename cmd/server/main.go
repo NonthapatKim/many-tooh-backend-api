@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/chanitt/go-hexagonal-template/internal/server"
+	"github.com/NonthapatKim/many_tooth_api/internal/server"
 )
 
 func main() {

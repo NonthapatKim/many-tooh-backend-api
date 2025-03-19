@@ -1,14 +1,26 @@
-version: '3'
 services:
-  api:
-    container_name: api
+  many-tooth:
+    container_name: many-tooth-api
     platform: linux/amd64
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "4200:4200"
+    environment:
+      - PORT=4200
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - SECRET_KEY=${SECRET_KEY}
+      - TZ=Asia/Bangkok
     networks:
-      - default
+      - my_network
     volumes:
       - .:/app
+
+networks:
+  my_network:
+    external: true

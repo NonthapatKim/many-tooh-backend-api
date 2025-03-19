@@ -1,10 +1,15 @@
 package repository
 
-import "github.com/chanitt/go-hexagonal-template/internal/core/port"
+import (
+	"database/sql"
+
+	"github.com/NonthapatKim/many_tooth_api/internal/core/port"
+)
 
 type repository struct {
+	db *sql.DB
 }
 
-func New() port.Repository {
-	return &repository{}
+func New(db *sql.DB) port.Repository {
+	return &repository{db: db}
 }

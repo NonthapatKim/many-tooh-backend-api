@@ -1,24 +1,22 @@
 package server
 
 import (
-	"fmt"
 	"log"
 
-	"github.com/chanitt/go-hexagonal-template/internal/adapter/handler"
-	"github.com/chanitt/go-hexagonal-template/internal/adapter/repository"
-	"github.com/chanitt/go-hexagonal-template/internal/core/service"
-	"github.com/chanitt/go-hexagonal-template/internal/router"
-	"github.com/joho/godotenv"
+	"github.com/NonthapatKim/many_tooth_api/infrastructure"
+	"github.com/NonthapatKim/many_tooth_api/internal/adapter/handler"
+	"github.com/NonthapatKim/many_tooth_api/internal/adapter/repository"
+	"github.com/NonthapatKim/many_tooth_api/internal/core/service"
+	"github.com/NonthapatKim/many_tooth_api/internal/router"
 )
 
 func RunServer() error {
-	fmt.Println("Starting server...")
-	if err := godotenv.Load("../../.env"); err != nil {
-		log.Fatal("Error loading .env file", err)
+	mysql, err := infrastructure.NewMySQL()
+	if err != nil {
+		log.Fatal("Error initializing MySQL database", err)
 	}
-
 	// init repository
-	repo := repository.New()
+	repo := repository.New(mysql)
 
 	// init service
 	svc := service.New(repo)
@@ -28,8 +26,7 @@ func RunServer() error {
 
 	router, err := router.NewRouter(hdl)
 	if err != nil {
-		fmt.Println("Error initializing router", err)
-		return err
+		log.Fatal("Error initializing router:", err)
 	}
 
 	return router.Start()
