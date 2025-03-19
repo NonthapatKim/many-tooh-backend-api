@@ -1,14 +1,15 @@
 services:
-  many-tooth:
-    container_name: many-tooth-api
+ many-tooth:
+    container_name: many-tooth-backend-api
+    image: many-tooth-backend-api
     platform: linux/amd64
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "4200:4200"
+      - "4300:4300"
     environment:
-      - PORT=4200
+      - PORT=4300
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
       - DB_NAME=${DB_NAME}

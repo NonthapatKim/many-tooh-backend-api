@@ -1,4 +1,4 @@
-module github.com/NonthapatKim/many_tooth_api
+module github.com/NonthapatKim/many_tooth_backend_api
 
 go 1.23
 
