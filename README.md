@@ -1,3 +1,3 @@
-# Many Tooth API
+# Many Tooth Backend API
 
-This is a Many Tooth API for Thesis (Template by chanitt)
+This is a Many Tooth Backend API for Thesis (Template by chanitt)
