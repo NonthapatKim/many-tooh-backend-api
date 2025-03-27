@@ -1,23 +1,28 @@
 package function
 
 import (
-	"fmt"
+	"errors"
 	"os"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 )
 
-func GenerateAccessToken(userID string) (string, error) {
+func GenerateAccessToken(user string, role string, name string) (string, error) {
 	secretKey := os.Getenv("SECRET_KEY")
 	if secretKey == "" {
-		return "", fmt.Errorf("secret key not set in environment variables")
+		return "", errors.New("missing secret key in environment variables")
 	}
 
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.RegisteredClaims{
-		Subject:   userID,
-		ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 1)),
-	})
+	claims := jwt.MapClaims{
+		"user_id":  user,
+		"role":     role,
+		"username": name,
+		"iat":      time.Now().Unix(),
+		"exp":      time.Now().Add(time.Hour * 6).Unix(),
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	tokenString, err := token.SignedString([]byte(secretKey))
 	if err != nil {

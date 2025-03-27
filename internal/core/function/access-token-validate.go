@@ -9,13 +9,13 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-func ValidateAccessToken(tokenString *string) (string, error) {
+func ValidateAccessToken(tokenString *string) (map[string]interface{}, error) {
 	secretKey := os.Getenv("SECRET_KEY")
 	if secretKey == "" {
-		return "", errors.New("secret key not found in environment variables")
+		return nil, errors.New("secret key not found in environment variables")
 	}
 
-	token, err := jwt.ParseWithClaims(*tokenString, &jwt.RegisteredClaims{}, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.Parse(*tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, errors.New("unexpected signing method")
 		}
@@ -23,20 +23,16 @@ func ValidateAccessToken(tokenString *string) (string, error) {
 	})
 
 	if err != nil {
-		return "", fmt.Errorf("error while parsing token: %v", err)
+		return nil, fmt.Errorf("error while parsing token: %v", err)
 	}
 
-	if claims, ok := token.Claims.(*jwt.RegisteredClaims); ok && token.Valid {
-		if claims.ExpiresAt != nil && claims.ExpiresAt.Before(time.Now()) {
-			return "", errors.New("token has expired")
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		if exp, ok := claims["exp"].(float64); ok && time.Unix(int64(exp), 0).Before(time.Now()) {
+			return nil, errors.New("token has expired")
 		}
 
-		userId := claims.Subject
-		if userId == "" {
-			return "", errors.New("user_id not found in token claims")
-		}
-		return userId, nil
+		return claims, nil
 	}
 
-	return "", errors.New("invalid token")
+	return nil, errors.New("invalid token")
 }

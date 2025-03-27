@@ -1,6 +1,6 @@
 services:
  many-tooh:
-    container_name: many-tooh-backend-api
+    container_name: many-tooh-backend
     image: many-tooh-backend-api
     platform: linux/amd64
     build:
