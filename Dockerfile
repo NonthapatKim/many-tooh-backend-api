@@ -27,7 +27,7 @@ ENV TZ=Asia/Bangkok
 
 EXPOSE 8080
 
-ENTRYPOINT ["/bin/server"]
+CMD ["/bin/server"]
 
 # FROM golang:1.23-alpine
 
