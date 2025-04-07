@@ -82,7 +82,7 @@ func NewRouter(h handler.Handler) (*Router, error) {
 func (r *Router) Start() error {
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "4300"
+		port = "8080"
 	}
 
 	fmt.Println("Listening on port", port)
