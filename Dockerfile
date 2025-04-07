@@ -25,7 +25,7 @@ COPY --from=builder /bin/server /bin/server
 
 ENV TZ=Asia/Bangkok
 
-EXPOSE 4300
+EXPOSE 8080
 
 ENTRYPOINT ["/bin/server"]
 
