@@ -6,22 +6,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"os"
 
 	"github.com/NonthapatKim/many-tooh-backend-api/internal/core/domain"
 	"github.com/NonthapatKim/many-tooh-backend-api/internal/core/function"
 	"github.com/cloudinary/cloudinary-go/v2"
 	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
-	"github.com/joho/godotenv"
 )
-
-func init() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-}
 
 func (s *service) UpdateProductById(req domain.UpdateProductByIdRequest) (domain.UpdateProductByIdResponse, error) {
 	var checkList []domain.CheckExistsRequest

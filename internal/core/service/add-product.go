@@ -3,22 +3,13 @@ package service
 import (
 	"context"
 	"errors"
-	"log"
 	"os"
 
 	"github.com/NonthapatKim/many-tooh-backend-api/internal/core/domain"
 	"github.com/NonthapatKim/many-tooh-backend-api/internal/core/function"
 	"github.com/cloudinary/cloudinary-go/v2"
 	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
-	"github.com/joho/godotenv"
 )
-
-func init() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-}
 
 func (s *service) AddProduct(req domain.AddProductRequest) (domain.AddProductResponse, error) {
 	if req.AccessToken == "" {
