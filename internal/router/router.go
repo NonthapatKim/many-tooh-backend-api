@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/NonthapatKim/many_tooh_backend_api/internal/adapter/handler"
-	"github.com/NonthapatKim/many_tooh_backend_api/internal/adapter/handler/middleware"
+	"github.com/NonthapatKim/many-tooh-backend-api/internal/adapter/handler"
+	"github.com/NonthapatKim/many-tooh-backend-api/internal/adapter/handler/middleware"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
@@ -19,8 +19,10 @@ const serviceBaseURL = "/api"
 func NewRouter(h handler.Handler) (*Router, error) {
 	app := fiber.New()
 
+	ALLOW_ORIGINS_URL := os.Getenv("ALLOW_ORIGINS_URL")
+
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     "http://localhost:5173",
+		AllowOrigins:     ALLOW_ORIGINS_URL,
 		AllowMethods:     "GET,POST,PUT,PATCH,DELETE",
 		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
 		AllowCredentials: true,
@@ -36,17 +38,33 @@ func NewRouter(h handler.Handler) (*Router, error) {
 	brand := basePathV1.Group("/brands")
 	{
 		brand.Get("/", h.GetBrands)
+		brand.Post("/add", h.AddBrand)
+		brand.Put("/:brandId", h.UpdateBrandById)
+		brand.Delete("/:brandId", h.DeleteBrandById)
 	}
 
 	product := basePathV1.Group("/products")
 	{
 		product.Get("/", h.GetProducts)
 		product.Post("/add", h.AddProduct)
-		product.Get("/categories", h.GetProductCategories)
-		product.Get("/type", h.GetProductType)
-
 		product.Patch("/:productId", h.UpdateProductById)
 		product.Delete("/:productId", h.DeleteProductById)
+	}
+
+	category := basePathV1.Group("/categories")
+	{
+		category.Get("/", h.GetProductCategories)
+		category.Post("/add", h.AddProductCategory)
+		category.Put("/:categoryId", h.UpdateProductCategoryById)
+		category.Delete("/:categoryId", h.DeleteProductCategoryById)
+	}
+
+	categoryType := basePathV1.Group("/types")
+	{
+		categoryType.Get("/", h.GetProductType)
+		categoryType.Post("/add", h.AddProductType)
+		categoryType.Put("/:productTypeId", h.UpdateProductTypeById)
+		categoryType.Delete("/:productTypeId", h.DeleteProductTypeById)
 	}
 
 	user := basePathV1.Group("/users")

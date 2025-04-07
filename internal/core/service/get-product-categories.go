@@ -3,8 +3,8 @@ package service
 import (
 	"errors"
 
-	"github.com/NonthapatKim/many_tooh_backend_api/internal/core/domain"
-	"github.com/NonthapatKim/many_tooh_backend_api/internal/core/function"
+	"github.com/NonthapatKim/many-tooh-backend-api/internal/core/domain"
+	"github.com/NonthapatKim/many-tooh-backend-api/internal/core/function"
 )
 
 func (s *service) GetProductCategories(req domain.GetProductCategoriesRequest) ([]domain.GetProductCategoriesResponse, error) {

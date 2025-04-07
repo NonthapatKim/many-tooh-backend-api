@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"github.com/NonthapatKim/many_tooh_backend_api/internal/core/domain"
-	"github.com/NonthapatKim/many_tooh_backend_api/internal/core/domain/response"
+	"github.com/NonthapatKim/many-tooh-backend-api/internal/core/domain"
+	"github.com/NonthapatKim/many-tooh-backend-api/internal/core/domain/response"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -14,8 +14,6 @@ func nullableString(value string) *string {
 }
 
 func (h *handler) AddProduct(c *fiber.Ctx) error {
-	var product domain.AddProductRequest
-
 	accessToken := c.Cookies("access_token")
 	if accessToken == "" {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
@@ -38,22 +36,24 @@ func (h *handler) AddProduct(c *fiber.Ctx) error {
 	}
 	defer src.Close()
 
-	product.AccessToken = accessToken
-	product.BrandId = c.FormValue("brand_id")
-	product.ProductCategoryId = c.FormValue("product_category_id")
-	product.ProductTypeId = c.FormValue("product_type_id")
-	product.ProductName = c.FormValue("product_name")
-	product.Barcode = c.FormValue("barcode")
-	product.Warning = nullableString(c.FormValue("warning"))
-	product.UsageDescription = nullableString(c.FormValue("usage_description"))
-	product.AmountFluoride = nullableString(c.FormValue("amount_fluoride"))
-	product.Properties = nullableString(c.FormValue("properties"))
-	product.ActiveIngredient = nullableString(c.FormValue("active_ingredient"))
-	product.DangerousIngredient = nullableString(c.FormValue("dangerous_ingredient"))
-	product.IsDangerous = c.FormValue("is_dangerous")
-	product.Image = src
+	req := domain.AddProductRequest{
+		AccessToken:         accessToken,
+		BrandId:             c.FormValue("brand_id"),
+		ProductCategoryId:   c.FormValue("product_category_id"),
+		ProductTypeId:       c.FormValue("product_type_id"),
+		ProductName:         c.FormValue("product_name"),
+		Barcode:             c.FormValue("barcode"),
+		Warning:             nullableString(c.FormValue("warning")),
+		UsageDescription:    nullableString(c.FormValue("usage_description")),
+		AmountFluoride:      nullableString(c.FormValue("amount_fluoride")),
+		Properties:          nullableString(c.FormValue("properties")),
+		ActiveIngredient:    nullableString(c.FormValue("active_ingredient")),
+		DangerousIngredient: nullableString(c.FormValue("dangerous_ingredient")),
+		IsDangerous:         c.FormValue("is_dangerous"),
+		Image:               src,
+	}
 
-	result, err := h.svc.AddProduct(product)
+	result, err := h.svc.AddProduct(req)
 	if err != nil {
 		if validationErrs, ok := err.(domain.ValidationError); ok {
 			return response.JSONErrorResponse(c, fiber.StatusBadRequest, "", &validationErrs.Errors)

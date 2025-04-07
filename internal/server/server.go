@@ -3,11 +3,11 @@ package server
 import (
 	"log"
 
-	"github.com/NonthapatKim/many_tooh_backend_api/infrastructure"
-	"github.com/NonthapatKim/many_tooh_backend_api/internal/adapter/handler"
-	"github.com/NonthapatKim/many_tooh_backend_api/internal/adapter/repository"
-	"github.com/NonthapatKim/many_tooh_backend_api/internal/core/service"
-	"github.com/NonthapatKim/many_tooh_backend_api/internal/router"
+	"github.com/NonthapatKim/many-tooh-backend-api/infrastructure"
+	"github.com/NonthapatKim/many-tooh-backend-api/internal/adapter/handler"
+	"github.com/NonthapatKim/many-tooh-backend-api/internal/adapter/repository"
+	"github.com/NonthapatKim/many-tooh-backend-api/internal/core/service"
+	"github.com/NonthapatKim/many-tooh-backend-api/internal/router"
 )
 
 func RunServer() error {

@@ -3,8 +3,8 @@ package handler
 import (
 	"time"
 
-	"github.com/NonthapatKim/many_tooh_backend_api/internal/core/domain"
-	"github.com/NonthapatKim/many_tooh_backend_api/internal/core/domain/response"
+	"github.com/NonthapatKim/many-tooh-backend-api/internal/core/domain"
+	"github.com/NonthapatKim/many-tooh-backend-api/internal/core/domain/response"
 	"github.com/gofiber/fiber/v2"
 )
 

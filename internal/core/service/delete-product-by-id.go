@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/NonthapatKim/many_tooh_backend_api/internal/core/domain"
-	"github.com/NonthapatKim/many_tooh_backend_api/internal/core/function"
+	"github.com/NonthapatKim/many-tooh-backend-api/internal/core/domain"
+	"github.com/NonthapatKim/many-tooh-backend-api/internal/core/function"
 )
 
 func (s *service) DeleteProductById(req domain.DeleteProductByIdRequest) (domain.DeleteProductByIdResponse, error) {
@@ -59,7 +59,7 @@ func (s *service) DeleteProductById(req domain.DeleteProductByIdRequest) (domain
 
 	response := domain.DeleteProductByIdResponse{
 		Code:    200,
-		Message: "successfully updated product",
+		Message: "successfully deleted product",
 	}
 
 	return response, nil

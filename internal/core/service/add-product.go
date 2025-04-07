@@ -6,8 +6,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/NonthapatKim/many_tooh_backend_api/internal/core/domain"
-	"github.com/NonthapatKim/many_tooh_backend_api/internal/core/function"
+	"github.com/NonthapatKim/many-tooh-backend-api/internal/core/domain"
+	"github.com/NonthapatKim/many-tooh-backend-api/internal/core/function"
 	"github.com/cloudinary/cloudinary-go/v2"
 	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 	"github.com/joho/godotenv"

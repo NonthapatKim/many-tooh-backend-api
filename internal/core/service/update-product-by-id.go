@@ -9,8 +9,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/NonthapatKim/many_tooh_backend_api/internal/core/domain"
-	"github.com/NonthapatKim/many_tooh_backend_api/internal/core/function"
+	"github.com/NonthapatKim/many-tooh-backend-api/internal/core/domain"
+	"github.com/NonthapatKim/many-tooh-backend-api/internal/core/function"
 	"github.com/cloudinary/cloudinary-go/v2"
 	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 	"github.com/joho/godotenv"
@@ -72,6 +72,15 @@ func (s *service) UpdateProductById(req domain.UpdateProductByIdRequest) (domain
 		cld, err := cloudinary.NewFromURL(CLOUDINARY_URL)
 		if err != nil {
 			return domain.UpdateProductByIdResponse{}, errors.New("failed to initialize Cloudinary")
+		}
+
+		if req.ProductImageUrl != nil {
+			_, err := cld.Upload.Destroy(context.Background(), uploader.DestroyParams{
+				PublicID: *req.ProductImageUrl,
+			})
+			if err != nil {
+				return domain.UpdateProductByIdResponse{}, errors.New("failed to delete old image from Cloudinary")
+			}
 		}
 
 		imageData, err := io.ReadAll(*req.Image)

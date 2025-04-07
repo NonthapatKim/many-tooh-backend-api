@@ -1,4 +1,4 @@
-module github.com/NonthapatKim/many_tooh_backend_api
+module github.com/NonthapatKim/many-tooh-backend-api
 
 go 1.23
 

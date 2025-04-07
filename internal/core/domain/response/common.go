@@ -1,6 +1,6 @@
 package response
 
-import "github.com/NonthapatKim/many_tooh_backend_api/internal/core/constant"
+import "github.com/NonthapatKim/many-tooh-backend-api/internal/core/constant"
 
 type SuccessResponse struct {
 	Code    string                  `json:"code" default:"0000"`
