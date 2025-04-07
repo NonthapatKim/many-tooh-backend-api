@@ -19,10 +19,8 @@ const serviceBaseURL = "/api"
 func NewRouter(h handler.Handler) (*Router, error) {
 	app := fiber.New()
 
-	ALLOW_ORIGINS_URL := os.Getenv("ALLOW_ORIGINS_URL")
-
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     ALLOW_ORIGINS_URL,
+		AllowOrigins:     "http://localhost:5173, https://many-tooh-admin-359586997523.asia-southeast1.run.app",
 		AllowMethods:     "GET,POST,PUT,PATCH,DELETE",
 		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
 		AllowCredentials: true,
