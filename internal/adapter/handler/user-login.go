@@ -28,7 +28,7 @@ func (h *handler) UserLogin(c *fiber.Ctx) error {
 		Value:    result.Accesstoken,
 		Expires:  time.Now().Add(6 * time.Hour),
 		HTTPOnly: true,
-		Secure:   true,
+		Secure:   false,
 		SameSite: fiber.CookieSameSiteStrictMode,
 	})
 
