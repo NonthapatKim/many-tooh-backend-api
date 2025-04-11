@@ -22,9 +22,13 @@ func NewRouter(h handler.Handler) (*Router, error) {
 	app.Use(cors.New(cors.Config{
 		AllowOrigins:     "https://many-tooh.web.app",
 		AllowMethods:     "GET,POST,PUT,PATCH,DELETE,OPTIONS",
-		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
+		AllowHeaders:     "*",
 		AllowCredentials: true,
 	}))
+
+	app.Options("/*", func(c *fiber.Ctx) error {
+		return c.SendStatus(fiber.StatusOK)
+	})
 
 	basePath := app.Group(serviceBaseURL)
 	basePathV1 := basePath.Group("/v1").Use(middleware.LoggerMiddleware())
