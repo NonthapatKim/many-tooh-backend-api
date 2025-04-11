@@ -29,7 +29,7 @@ func (h *handler) UserLogin(c *fiber.Ctx) error {
 		Expires:  time.Now().Add(6 * time.Hour),
 		HTTPOnly: true,
 		Secure:   true,
-		SameSite: fiber.CookieSameSiteNoneMode,
+		SameSite: fiber.CookieSameSiteNoneMode, //fiber.CookieSameSiteNoneMode
 	})
 
 	return response.JSONSuccessResponse(c, fiber.Map{
