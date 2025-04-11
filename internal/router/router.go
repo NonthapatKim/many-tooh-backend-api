@@ -20,8 +20,8 @@ func NewRouter(h handler.Handler) (*Router, error) {
 	app := fiber.New()
 
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     "http://localhost:5173, https://many-tooh.web.app/",
-		AllowMethods:     "GET,POST,PUT,PATCH,DELETE",
+		AllowOrigins:     "http://localhost:5173, https://many-tooh.web.app",
+		AllowMethods:     "GET,POST,PUT,PATCH,DELETE,OPTIONS",
 		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
 		AllowCredentials: true,
 	}))
