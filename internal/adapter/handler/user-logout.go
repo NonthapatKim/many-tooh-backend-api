@@ -13,8 +13,8 @@ func (h *handler) UserLogOut(c *fiber.Ctx) error {
 		Value:    "",
 		Expires:  time.Unix(0, 0),
 		HTTPOnly: true,
-		Secure:   false,
-		SameSite: fiber.CookieSameSiteStrictMode,
+		Secure:   true,
+		SameSite: fiber.CookieSameSiteNoneMode,
 	})
 
 	result, err := h.svc.UserLogout()
