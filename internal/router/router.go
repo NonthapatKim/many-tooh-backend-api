@@ -22,7 +22,7 @@ func NewRouter(h handler.Handler) (*Router, error) {
 	app.Use(cors.New(cors.Config{
 		AllowOrigins:     "https://many-tooh.web.app",
 		AllowMethods:     "GET,POST,PUT,PATCH,DELETE,OPTIONS",
-		AllowHeaders:     "*",
+		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
 		AllowCredentials: true,
 	}))
 
