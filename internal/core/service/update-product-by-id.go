@@ -58,19 +58,22 @@ func (s *service) UpdateProductById(req domain.UpdateProductByIdRequest) (domain
 		}
 	}
 
-	if req.Image != nil {
+	if req.Image != nil && *req.Image != nil {
 		CLOUDINARY_URL := os.Getenv("CLOUDINARY_URL")
 		cld, err := cloudinary.NewFromURL(CLOUDINARY_URL)
 		if err != nil {
 			return domain.UpdateProductByIdResponse{}, errors.New("failed to initialize Cloudinary")
 		}
 
-		if req.ProductImageUrl != nil {
-			_, err := cld.Upload.Destroy(context.Background(), uploader.DestroyParams{
-				PublicID: *req.ProductImageUrl,
-			})
-			if err != nil {
-				return domain.UpdateProductByIdResponse{}, errors.New("failed to delete old image from Cloudinary")
+		if req.ProductImageUrl != nil && *req.ProductImageUrl != "" {
+			publicID := function.ExtractPublicID(*req.ProductImageUrl)
+			if publicID != "" {
+				_, err := cld.Upload.Destroy(context.Background(), uploader.DestroyParams{
+					PublicID: publicID,
+				})
+				if err != nil {
+					return domain.UpdateProductByIdResponse{}, errors.New("failed to delete old image from Cloudinary")
+				}
 			}
 		}
 
@@ -84,8 +87,8 @@ func (s *service) UpdateProductById(req domain.UpdateProductByIdRequest) (domain
 			return domain.UpdateProductByIdResponse{}, errors.New("failed to upload image to Cloudinary")
 		}
 
-		ImageUrl := uploadRes.SecureURL
-		req.ProductImageUrl = &ImageUrl
+		imageURL := uploadRes.SecureURL
+		req.ProductImageUrl = &imageURL
 	}
 
 	_, err = s.repo.UpdateProductById(req)
