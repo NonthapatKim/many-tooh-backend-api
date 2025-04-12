@@ -1,31 +1,24 @@
-FROM golang:1.23-alpine as builder
+FROM golang:1.23-alpine AS builder
 
 RUN apk add --no-cache git tzdata
 
 WORKDIR /app
 
-ENV HOST 0.0.0.0
-
 ENV TZ=Asia/Bangkok
-
 COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . .
 
-RUN GOOS=linux GOARCH=amd64 go build -o /bin/server cmd/server/main.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o server cmd/server/main.go
 
-FROM alpine:latest
+FROM scratch
 
-WORKDIR /app
-
-RUN apk add --no-cache ca-certificates
-
-COPY --from=builder /bin/server /bin/server
-
+COPY --from=builder /usr/share/zoneinfo/Asia/Bangkok /usr/share/zoneinfo/Asia/Bangkok
 ENV TZ=Asia/Bangkok
+
+COPY --from=builder /app/server /server
 
 EXPOSE 8080
 
-CMD ["/bin/server"]
-
+CMD ["/server"]
