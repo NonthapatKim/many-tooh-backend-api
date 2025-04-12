@@ -1,6 +1,6 @@
 FROM golang:1.23-alpine AS builder
 
-RUN apk add --no-cache git tzdata
+RUN apk add --no-cache git tzdata ca-certificates
 
 WORKDIR /app
 
@@ -16,6 +16,8 @@ FROM scratch
 
 COPY --from=builder /usr/share/zoneinfo/Asia/Bangkok /usr/share/zoneinfo/Asia/Bangkok
 ENV TZ=Asia/Bangkok
+
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 COPY --from=builder /app/server /server
 
