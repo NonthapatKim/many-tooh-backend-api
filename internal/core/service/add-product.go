@@ -48,7 +48,7 @@ func (s *service) AddProduct(req domain.AddProductRequest) (domain.AddProductRes
 
 	uploadRes, err := cld.Upload.Upload(context.Background(), req.Image, uploader.UploadParams{})
 	if err != nil {
-		return domain.AddProductResponse{}, errors.New("failed to upload image to Cloudinary")
+		return domain.AddProductResponse{}, err
 	}
 
 	req.ImageUrl = uploadRes.SecureURL
